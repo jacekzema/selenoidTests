@@ -21,13 +21,31 @@ pipeline {
     post {
         always {
             bat 'mvn allure:report'
-            junit 'target/surefire-reports/*.xml'
-            archiveArtifacts artifacts: 'target/allure-results/**', allowEmptyArchive: true
-            publishHTML(target: [
-                reportName: 'Allure Report',
-                reportDir: 'target/site/allure-maven-plugin',
-                reportFiles: 'index.html'
+
+            // Publish the Allure results and report as an artifact
+            allure([
+                includeProperties: false,
+                jdk: '',
+                properties: [],
+                reportBuildPolicy: 'ALWAYS',
+                results: [[path: 'target/allure-results']]  // Location of Allure results
             ])
+
+            // Archive Allure report directory
+            archiveArtifacts artifacts: 'target/site/allure-maven-plugin/**', allowEmptyArchive: true
+
+            // Display link to Allure report on Jenkins
+            publishHTML(target: [
+                reportName : 'Allure Report',
+                reportDir  : 'target/site/allure-maven-plugin',
+                reportFiles: 'index.html',
+                alwaysLinkToLastBuild: true,
+                keepAll: true
+            ])
+
+
+
+
         }
     }
 }
