@@ -2,6 +2,7 @@ pipeline {
     agent any
     tools {
         maven 'Maven' // Ensure Maven is installed and configured in Jenkins
+        git 'Default' // Ensure this matches the name configured in Jenkins
     }
     stages {
         stage('Checkout') {
@@ -11,9 +12,14 @@ pipeline {
         }
         stage('Build and Test') {
             steps {
-                sh 'mvn clean test'
+                bat 'mvn clean test'
             }
         }
+        stage('Allure Report') {
+            steps {
+                 bat 'allure generate --clean'
+                 }
+            }
     }
     post {
         always {
