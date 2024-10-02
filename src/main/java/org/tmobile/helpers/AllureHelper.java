@@ -12,7 +12,7 @@ import java.io.FileNotFoundException;
 public class AllureHelper {
 
     private static final String LOG_FILE_PATH = "logs/test-log.log";
-    
+
     static public void attachLogFile() {
         File logFile = new File(LOG_FILE_PATH);
         try (FileInputStream fis = new FileInputStream(logFile)) {
@@ -26,6 +26,6 @@ public class AllureHelper {
 
     static public void takeScreenshot() {
         byte[] screenshot = Selenide.screenshot(OutputType.BYTES);
-        Allure.addAttachment("Screenshot on Failure", new ByteArrayInputStream(screenshot));
+        Allure.addAttachment("Screenshot", new ByteArrayInputStream(screenshot));
     }
 }
