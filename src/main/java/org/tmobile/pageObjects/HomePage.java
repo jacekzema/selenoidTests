@@ -34,7 +34,9 @@ public class HomePage {
 
     public void checkIfHomePageOpen() {
         Logger.info("Checking if home page is opened");
-        topNavigationMenu.shouldBe(Condition.visible);
+        topNavigationMenu.shouldBe(Condition.visible.because("The main menu should be visible on the home page"));
+        Logger.info("Main menu visibility: " + topNavigationMenu.isDisplayed());
+        Selenide.screenshot("home_page_state");
     }
 
     public String getTitle() {
