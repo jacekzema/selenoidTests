@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven 3.6.3' // Ensure Maven is installed and configured in Jenkins
+        maven 'Maven' // Ensure Maven is installed and configured in Jenkins
     }
     stages {
         stage('Checkout') {
@@ -18,6 +18,12 @@ pipeline {
     post {
         always {
             junit 'target/surefire-reports/*.xml'
+            archiveArtifacts artifacts: 'allure-report/**', allowEmptyArchive: true
+            publishHTML(target: [
+                reportName: 'Allure Report',
+                reportDir: 'allure-report',
+                reportFiles: 'index.html'
+            ])
         }
     }
 }
