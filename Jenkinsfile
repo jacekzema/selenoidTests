@@ -19,14 +19,14 @@ pipeline {
         }
         stage('Allure Report') {
             steps {
-                 bat 'allure generate --clean'
+                 bat 'mvn allure:report'
                  }
             }
     }
     post {
         always {
             junit 'target/surefire-reports/*.xml'
-            archiveArtifacts artifacts: 'allure-report/**', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'target/allure-results/**', allowEmptyArchive: true
             publishHTML(target: [
                 reportName: 'Allure Report',
                 reportDir: 'allure-report',
