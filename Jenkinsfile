@@ -21,7 +21,6 @@ pipeline {
     post {
         always {
             bat 'mvn allure:report'
-
             // Publish the Allure results and report as an artifact
             allure([
                 includeProperties: false,
@@ -42,10 +41,6 @@ pipeline {
                 alwaysLinkToLastBuild: true,
                 keepAll: true
             ])
-
-
-
-
         }
     }
 }
