@@ -12,7 +12,9 @@ pipeline {
         }
         stage('Build and Test') {
             steps {
-                bat 'mvn clean test'
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    bat 'mvn clean test'
+        }
             }
         }
         stage('Allure Report') {
