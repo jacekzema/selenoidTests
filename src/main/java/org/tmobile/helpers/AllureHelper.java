@@ -25,6 +25,7 @@ public class AllureHelper {
     }
 
     static public void takeScreenshot() {
+        Logger.info("Taking screenshot");
         byte[] screenshot = Selenide.screenshot(OutputType.BYTES);
         Allure.addAttachment("Screenshot", new ByteArrayInputStream(screenshot));
     }

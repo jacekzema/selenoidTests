@@ -9,7 +9,6 @@ import org.tmobile.helpers.Logger;
 import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.*;
-import static org.tmobile.helpers.AllureHelper.takeScreenshot;
 
 public class HomePage {
 
@@ -31,14 +30,11 @@ public class HomePage {
     public void openHomePage() {
         Logger.info("Opening home page: " + HOME_PAGE_URL);
         open(HOME_PAGE_URL);
-        takeScreenshot();
     }
 
     public void checkIfHomePageOpen() {
         Logger.info("Checking if home page is opened");
         topNavigationMenu.shouldBe(Condition.visible.because("The main menu should be visible on the home page"));
-        Logger.info("Main menu visibility: " + topNavigationMenu.isDisplayed());
-        takeScreenshot();
     }
 
     public String getTitle() {
@@ -83,7 +79,6 @@ public class HomePage {
                     .until((WebDriver wd) -> {
                         if (cookieBanner.isDisplayed()) {
                             Logger.info("Cookie banner detected. Accepting cookies.");
-                            takeScreenshot();
                             cookieAcceptButton.click();
                             return true;
                         }

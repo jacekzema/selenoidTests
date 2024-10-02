@@ -13,23 +13,19 @@ pipeline {
         stage('Build and Test') {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    bat 'mvn clean test'
+                    bat 'mvn clean test -Dheadless=true'  // only headless mode will work on jenkins
         }
             }
         }
-        stage('Allure Report') {
-            steps {
-                 bat 'mvn allure:report'
-                 }
-            }
     }
     post {
         always {
+            bat 'mvn allure:report'
             junit 'target/surefire-reports/*.xml'
             archiveArtifacts artifacts: 'target/allure-results/**', allowEmptyArchive: true
             publishHTML(target: [
                 reportName: 'Allure Report',
-                reportDir: 'target/allure-report',
+                reportDir: 'target/site/allure-maven-plugin',
                 reportFiles: 'index.html'
             ])
         }
