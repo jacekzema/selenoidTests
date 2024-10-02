@@ -29,7 +29,7 @@ pipeline {
             archiveArtifacts artifacts: 'target/allure-results/**', allowEmptyArchive: true
             publishHTML(target: [
                 reportName: 'Allure Report',
-                reportDir: 'allure-report',
+                reportDir: 'target/allure-report',
                 reportFiles: 'index.html'
             ])
         }
